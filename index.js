@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Route pour la page d'accueil
 app.get("/", (req, res) => {
-    res.send("Bienvenue sur la page d'accueil de l'application Vapeur !");
+    res.render("index");
 });
 
 //Gestion des erreurs 404 et 500
