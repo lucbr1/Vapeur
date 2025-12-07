@@ -1,0 +1,27 @@
+{
+  "name": "vapeur",
+  "version": "1.0.0",
+  "description": "Bibliothèque de jeux vidéo",
+  "main": "index.js",
+  "scripts": {
+    "run" : "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucbr1/Vapeur.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lucbr1/Vapeur/issues"
+  },
+  "homepage": "https://github.com/lucbr1/Vapeur#readme",
+  "dependencies": {
+    "@prisma/client": "6.19.0",
+    "express": "^5.2.1",
+    "hbs": "^4.2.0",
+    "prisma": "6.19.0",
+    "sqlite3": "^5.1.7"
+  }
+}
