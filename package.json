@@ -4,7 +4,8 @@
   "description": "Bibliothèque de jeux vidéo",
   "main": "index.js",
   "scripts": {
-    "start" : "node index.js",
+    "seeds": "node prisma/seed.js",
+    "start" : "npm run seeds && node index.js",
     "dev": "nodemon index.js"
   },
   "repository": {
