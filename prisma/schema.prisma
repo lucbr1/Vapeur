@@ -15,14 +15,14 @@ datasource db {
 
 model Game {
   id        Int      @id @default(autoincrement())
-  title     String
-  description String
-  releaseDate DateTime
+  title     String @unique
+  description String?
+  releaseDate DateTime?
   highlighted Boolean  @default(false)
-  genre Genre @relation(fields: [genreId], references: [id])
-  genreId Int
-  editor Editor @relation(fields: [editorId], references: [id])
-  editorId Int
+  genre Genre? @relation(fields: [genreId], references: [id])
+  genreId Int?
+  editor Editor? @relation(fields: [editorId], references: [id])
+  editorId Int?
 }
 
 model Genre{
@@ -33,6 +33,6 @@ model Genre{
 
 model Editor{
   id        Int      @id @default(autoincrement())
-  name      String
+  name      String  @unique
   games     Game[]
 }
