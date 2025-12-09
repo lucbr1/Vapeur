@@ -8,7 +8,7 @@
         <label for="genre">Genre</label>
         <select id="genre" name="genreId" required>
             {{#each genres}}
-                <option value="{{this.id}}" {{#if this.selected}}selected{{/if}}>{{this.name}}</option>
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
             {{/each}}
         </select>
     {{else}}
@@ -19,7 +19,7 @@
         <label for="editor">Éditeur</label>
         <select id="editor" name="editorId" required>
             {{#each editors}}
-                <option value="{{this.id}}" {{#if this.selected}}selected{{/if}}>{{this.name}}</option>
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
             {{/each}}
         </select>
     {{else}}
@@ -31,5 +31,3 @@
     <button type="submit">Update Game</button>
 </form>
 
-<a href="/games">Retour à la liste des jeux</a>
-<a href="/">Accueil</a>

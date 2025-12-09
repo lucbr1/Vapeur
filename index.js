@@ -20,8 +20,17 @@ hbs.registerPartials(path.join(__dirname, "views", "partials")); // On définit 
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Route pour la page d'accueil
-app.get("/", (req, res) => {
-    res.render("index");
+app.get("/", async (req, res) => {
+    const highlightedGames = await prisma.Game.findMany({
+        where: { highlighted: true },
+        include: {
+            genre: true,
+            editor: true,
+        },
+        orderBy: { releaseDate: "desc" },
+    });
+
+    res.render("index", { highlightedGames });
 });
 
 //récupérer la liste des jeux
@@ -48,6 +57,7 @@ app.get("/games/create", async (req, res) => {
 
 });
 
+// création d'un nouveau jeu
 app.post("/games", async (req, res) => {
     const {
         title,
@@ -89,6 +99,7 @@ app.post("/games", async (req, res) => {
     }
 });
 
+//Détails d'un jeu
 app.get("/games/:id", async (req, res) => {
     const gameId = parseInt(req.params.id);
     const game = await prisma.Game.findUnique({
@@ -103,11 +114,15 @@ app.get("/games/:id", async (req, res) => {
         return res.status(404).send("Game not found");
     }
 
+    const formattedReleaseDate = new Date(game.releaseDate).toLocaleDateString("fr-FR");
+
     res.render("games/details", {
         game,
+        formattedReleaseDate,
     });
 });
 
+//modification d'un jeu
 app.get("/games/:id/edit", async (req, res) => {
     const gameId = parseInt(req.params.id, 10);
 
@@ -186,6 +201,21 @@ app.post("/games/:id", async (req, res) => {
     }
 
     res.redirect(`/games/${gameId}`);
+});
+
+app.post("/games/:id/delete", async (req, res) => {
+    const gameId = parseInt(req.params.id, 10);
+
+    try {
+        await prisma.Game.delete({
+            where: { id: gameId },
+        });
+    } catch (error) {
+        console.error("Failed to delete game", error);
+        return res.status(500).send("Unable to delete game");
+    }
+
+    res.redirect("/games");
 });
 
 //Gestion des erreurs 404 et 500

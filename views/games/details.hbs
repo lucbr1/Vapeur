@@ -2,11 +2,33 @@
 
 <p><strong>Titre:</strong> {{game.title}}</p>
 <p><strong>Description:</strong> {{game.description}}</p>
-<p><strong>Date de sortie:</strong> {{game.releaseDate}}</p>
-<p><strong>mis en avant:</strong> {{game.highlighted}}</p>
+<p><strong>Date de sortie:</strong> {{formattedReleaseDate}}</p>
 <p><strong>Genre:</strong> {{game.genre.name}}</p>
 <p><strong>Éditeur:</strong> {{game.editor.name}}</p>
 
-<a href="/games/{{game.id}}/edit">Modifier le jeu</a>
-<a href="/games">Retour à la liste des jeux</a>
-<a href="/">Accueil</a>
+{{#if game.highlighted}}
+<p><strong>le jeu est  mis en avant</strong></p>
+{{else}}
+<p><strong>le jeu n'est pas mis en avant</strong></p>
+{{/if}}
+
+
+<form action="/games/{{game.id}}/edit" method="GET">
+	<button type="submit">Modifier le jeu</button>
+</form>
+
+
+<button type="button" onclick="document.getElementById('deleteDialog').showModal()">
+	Supprimer le jeu
+</button>
+
+<dialog id="deleteDialog">
+	<h2>Supprimer le jeu</h2>
+	<p>Êtes-vous sûr de vouloir supprimer "{{game.title}}" ?</p>
+	<form method="dialog">
+		<button type="submit">Annuler</button>
+	</form>
+	<form action="/games/{{game.id}}/delete" method="POST">
+		<button type="submit">Confirmer la suppression</button>
+	</form>
+</dialog>

@@ -6,7 +6,7 @@
   "scripts": {
     "seeds": "node prisma/seed.js",
     "start" : "npm run seeds && node index.js",
-    "dev": "nodemon index.js"
+    "dev": "npm run seeds && nodemon index.js"
   },
   "repository": {
     "type": "git",
