@@ -24,6 +24,21 @@ app.get("/", (req, res) => {
     res.render("index");
 });
 
+// Routes pour les genres
+app.get("/genres", async (req, res) => {
+    const genres = await prisma.genre.findMany({orderBy: { name: 'asc' }}); //on récupère tous les genres
+    res.render("genres/index", { genres });
+});
+
+app.get("/genres/:id", async (req, res) => {
+    const genreId = parseInt(req.params.id);
+    const genre = await prisma.genre.findUnique({//on récupère le genre avec les jeux associés
+        where: { id: genreId },
+        include: { games: { orderBy: { title: 'asc' } } },
+    });
+    res.render("genres/details", { genre });
+});
+
 //Gestion des erreurs 404 et 500
 app.use((err, req, res, next) => {
     console.error(err.stack);
