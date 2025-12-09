@@ -24,6 +24,14 @@ app.get("/", (req, res) => {
     res.render("index");
 });
 
+// Route pour la page éditeur
+app.get("/editors", async (req, res) => {
+    const editors = await prisma.editor.findMany();
+    res.render("editors/index", { editors });
+});
+
+
+
 //Gestion des erreurs 404 et 500
 app.use((err, req, res, next) => {
     console.error(err.stack);
