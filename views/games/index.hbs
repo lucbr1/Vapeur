@@ -1,0 +1,13 @@
+<h1>Liste des jeux</h1>
+
+<ul>
+    {{#each games}}
+        <li>
+            <a href="/games/{{id}}">{{title}}</a> <!-- on accède directement aux propriétés de l'objet courant -->
+        </li>
+    {{/each}}
+</ul>
+
+<a href="/games">Retour à la liste des jeux</a>
+<a href="/games/create">Ajouter un jeu</a>
+<a href="/">Accueil</a>
