@@ -19,6 +19,8 @@ hbs.registerPartials(path.join(__dirname, "views", "partials")); // On définit 
 // Cela permet de récupérer les données envoyées via des formulaires et les rendre disponibles dans req.body.
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(express.static("public")); // On sert les fichiers statiques (CSS, JS, images...) depuis le dossier "public"
+
 // Route pour la page d'accueil
 app.get("/", (req, res) => {
     res.render("index");
