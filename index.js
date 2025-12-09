@@ -19,26 +19,203 @@ hbs.registerPartials(path.join(__dirname, "views", "partials")); // On définit 
 // Cela permet de récupérer les données envoyées via des formulaires et les rendre disponibles dans req.body.
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(express.static("public")); // On sert les fichiers statiques (CSS, JS, images...) depuis le dossier "public"
-
 // Route pour la page d'accueil
-app.get("/", (req, res) => {
-    res.render("index");
-});
-
-// Routes pour les genres
-app.get("/genres", async (req, res) => {
-    const genres = await prisma.genre.findMany({orderBy: { name: 'asc' }}); //on récupère tous les genres
-    res.render("genres/index", { genres });
-});
-
-app.get("/genres/:id", async (req, res) => {
-    const genreId = parseInt(req.params.id);
-    const genre = await prisma.genre.findUnique({//on récupère le genre avec les jeux associés
-        where: { id: genreId },
-        include: { games: { orderBy: { title: 'asc' } } },
+app.get("/", async (req, res) => {
+    const highlightedGames = await prisma.Game.findMany({
+        where: { highlighted: true },
+        include: {
+            genre: true,
+            editor: true,
+        },
+        orderBy: { releaseDate: "desc" },
     });
-    res.render("genres/details", { genre });
+
+    res.render("index", { highlightedGames });
+});
+
+//récupérer la liste des jeux
+app.get("/games", async (req, res) => {
+    const games = await prisma.Game.findMany({
+        include: {
+            genre: true,
+            editor: true,
+        },
+    });
+    res.render("games/index", {
+        games,
+    });
+});
+
+//Page de création de jeu
+app.get("/games/create", async (req, res) => {
+    const [genres, editors] = await Promise.all([
+        prisma.Genre.findMany({ orderBy: { name: "asc" } }),
+        prisma.Editor.findMany({ orderBy: { name: "asc" } }),
+    ]);
+
+    res.render("games/new", { genres, editors });
+
+});
+
+// création d'un nouveau jeu
+app.post("/games", async (req, res) => {
+    const {
+        title,
+        description,
+        releaseDate,
+        highlighted,
+        genreId,
+        editorId,
+    } = req.body;
+
+    if (!title || !releaseDate || !genreId || !editorId) {
+        return res.status(400).send("Missing required fields");
+    }
+
+    const releaseDateValue = new Date(releaseDate);
+    if (Number.isNaN(releaseDateValue.getTime())) {
+        return res.status(400).send("Invalid release date");
+    }
+
+    const genreIdInt = parseInt(genreId, 10);
+    const editorIdInt = parseInt(editorId, 10);
+
+    try {
+        const newGame = await prisma.Game.create({
+            data: {
+                title,
+                description,
+                releaseDate: releaseDateValue,
+                highlighted: highlighted === "on",
+                genreId: genreIdInt,
+                editorId: editorIdInt,
+            },
+        });
+
+        return res.redirect(`/games/${newGame.id}`);
+    } catch (error) {
+        console.error("Failed to create game", error);
+        return res.status(500).send("Unable to create game");
+    }
+});
+
+//Détails d'un jeu
+app.get("/games/:id", async (req, res) => {
+    const gameId = parseInt(req.params.id);
+    const game = await prisma.Game.findUnique({
+        where: { id: gameId },
+        include: {
+            genre: true,
+            editor: true,
+        },
+    });
+
+    if (!game) {
+        return res.status(404).send("Game not found");
+    }
+
+    const formattedReleaseDate = new Date(game.releaseDate).toLocaleDateString("fr-FR");
+
+    res.render("games/details", {
+        game,
+        formattedReleaseDate,
+    });
+});
+
+//modification d'un jeu
+app.get("/games/:id/edit", async (req, res) => {
+    const gameId = parseInt(req.params.id, 10);
+
+    const [game, genres, editors] = await Promise.all([
+        prisma.Game.findUnique({
+            where: { id: gameId },
+        }),
+        prisma.Genre.findMany({ orderBy: { name: "asc" } }),
+        prisma.Editor.findMany({ orderBy: { name: "asc" } }),
+    ]);
+
+    if (!game) {
+        return res.status(404).send("Game not found");
+    }
+
+    const releaseDateValue = game.releaseDate
+        ? new Date(game.releaseDate).toISOString().slice(0, 16)
+        : "";
+
+    const genreOptions = genres.map((genre) => ({
+        ...genre,
+        selected: genre.id === game.genreId,
+    }));
+
+    const editorOptions = editors.map((editor) => ({
+        ...editor,
+        selected: editor.id === game.editorId,
+    }));
+
+    res.render("games/edit", {
+        game,
+        genres: genreOptions,
+        editors: editorOptions,
+        releaseDateValue,
+    });
+});
+
+app.post("/games/:id", async (req, res) => {
+    const gameId = parseInt(req.params.id, 10);
+    const {
+        title,
+        description,
+        releaseDate,
+        highlighted,
+        genreId,
+        editorId,
+    } = req.body;
+
+    if (!title || !releaseDate || !genreId || !editorId) {
+        return res.status(400).send("Missing required fields");
+    }
+
+    const releaseDateValue = new Date(releaseDate);
+    if (Number.isNaN(releaseDateValue.getTime())) {
+        return res.status(400).send("Invalid release date");
+    }
+
+    const genreIdInt = parseInt(genreId, 10);
+    const editorIdInt = parseInt(editorId, 10);
+
+    try {
+        await prisma.Game.update({
+            where: { id: gameId },
+            data: {
+                title,
+                description,
+                releaseDate: releaseDateValue,
+                highlighted: highlighted === "on",
+                genreId: genreIdInt,
+                editorId: editorIdInt,
+            },
+        });
+    } catch (error) {
+        console.error("Failed to update game", error);
+        return res.status(500).send("Unable to update game");
+    }
+
+    res.redirect(`/games/${gameId}`);
+});
+
+app.post("/games/:id/delete", async (req, res) => {
+    const gameId = parseInt(req.params.id, 10);
+
+    try {
+        await prisma.Game.delete({
+            where: { id: gameId },
+        });
+    } catch (error) {
+        console.error("Failed to delete game", error);
+        return res.status(500).send("Unable to delete game");
+    }
+
+    res.redirect("/games");
 });
 
 //Gestion des erreurs 404 et 500
