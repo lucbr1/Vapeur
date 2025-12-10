@@ -222,6 +222,30 @@ app.get("/editors", async (req, res) => {
     res.render("editors/index", { editors });
 });
 
+// Route pour afficher le formulaire de modification d'un éditeur
+app.get("/editors/:id/edit", async (req, res, next) => {
+    const editorId = parseInt(req.params.id, 10);
+    try {
+        const editor = await prisma.editor.findUnique({
+            where: { id: editorId },
+        });
+        if (editor) {
+            res.render("editors/edit", { editor });
+        } else {
+            res.status(404).send("Editor not found");
+        }
+    }
+    catch (error) {
+        next(error);
+    }
+});
+
+// Route pour afficher le formulaire de création d'un nouvel éditeur
+app.get("/editors/new", (req, res) => {
+    res.render("editors/new");
+});
+
+
 // Route pour afficher un éditeur spécifique
 app.get("/editors/:id", async (req, res, next) => {
     const editorId = parseInt(req.params.id, 10);
