@@ -1,34 +1,46 @@
-<h1>Détails du jeux</h1>
+<section class="game-details">
+	<div class="game-details__hero">
+		<h1>{{game.title}}</h1>
+		<p>{{game.description}}</p>
+		<span class="game-details__pill {{#if game.highlighted}}is-highlighted{{/if}}">
+			{{#if game.highlighted}}Mis en avant{{else}}Non mis en avant{{/if}}
+		</span>
+	</div>
 
-<p><strong>Titre:</strong> {{game.title}}</p>
-<p><strong>Description:</strong> {{game.description}}</p>
-<p><strong>Date de sortie:</strong> {{formattedReleaseDate}}</p>
-<p><strong>Genre:</strong> {{game.genre.name}}</p>
-<p><strong>Éditeur:</strong> {{game.editor.name}}</p>
+	<div class="game-details__grid">
+		<div class="game-details__item">
+			<span class="label">Date de sortie</span>
+			<p>{{formattedReleaseDate}}</p>
+		</div>
+		<div class="game-details__item">
+			<span class="label">Genre</span>
+			<p>{{game.genre.name}}</p>
+		</div>
+		<div class="game-details__item">
+			<span class="label">Éditeur</span>
+			<p>{{game.editor.name}}</p>
+		</div>
+	</div>
 
-{{#if game.highlighted}}
-<p><strong>le jeu est  mis en avant</strong></p>
-{{else}}
-<p><strong>le jeu n'est pas mis en avant</strong></p>
-{{/if}}
+	<div class="game-details__actions">
+		<form action="/games/{{game.id}}/edit" method="GET">
+			<button type="submit" class="cta">Modifier le jeu</button>
+		</form>
+		<button type="button" class="ghost" onclick="document.getElementById('deleteDialog').showModal()">
+			Supprimer le jeu
+		</button>
+	</div>
+</section>
 
-
-<form action="/games/{{game.id}}/edit" method="GET">
-	<button type="submit">Modifier le jeu</button>
-</form>
-
-
-<button type="button" onclick="document.getElementById('deleteDialog').showModal()">
-	Supprimer le jeu
-</button>
-
-<dialog id="deleteDialog">
+<dialog id="deleteDialog" class="game-details__dialog">
 	<h2>Supprimer le jeu</h2>
 	<p>Êtes-vous sûr de vouloir supprimer "{{game.title}}" ?</p>
-	<form method="dialog">
-		<button type="submit">Annuler</button>
-	</form>
-	<form action="/games/{{game.id}}/delete" method="POST">
-		<button type="submit">Confirmer la suppression</button>
-	</form>
+	<div class="game-details__dialog-actions">
+		<form method="dialog">
+			<button type="submit" class="ghost">Annuler</button>
+		</form>
+		<form action="/games/{{game.id}}/delete" method="POST">
+			<button type="submit" class="danger">Confirmer la suppression</button>
+		</form>
+	</div>
 </dialog>

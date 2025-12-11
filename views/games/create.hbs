@@ -1,0 +1,64 @@
+<section class="game-form">
+    <div class="game-form__intro">
+        <h1>Créer un nouveau jeu</h1>
+        <p>Renseignez les informations principales pour enrichir la bibliothèque de Vapeur.</p>
+    </div>
+
+    <form action="/games" method="POST" class="game-form__fields">
+        <div class="field">
+            <label for="title">Titre du jeu</label>
+            <input type="text" id="title" name="title" placeholder="Ex: Les Chroniques Stellaires" required />
+        </div>
+
+        <div class="field">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" placeholder="Ajoutez un pitch rapide"></textarea>
+        </div>
+
+        <div class="field">
+            <label for="releaseDate">Date de sortie</label>
+            <input type="datetime-local" id="releaseDate" name="releaseDate" />
+        </div>
+
+        <div class="field-group">
+            <div class="field">
+                <label for="genre">Genre</label>
+                {{#if genres}}
+                    <select id="genre" name="genreId" required>
+                        <option value="" disabled selected>Choisissez un genre</option>
+                        {{#each genres}}
+                            <option value="{{id}}">{{name}}</option>
+                        {{/each}}
+                    </select>
+                {{else}}
+                    <p class="form-hint">Aucun genre disponible. Ajoutez-en un avant de continuer.</p>
+                {{/if}}
+            </div>
+
+            <div class="field">
+                <label for="editor">Éditeur</label>
+                {{#if editors}}
+                    <select id="editor" name="editorId" required>
+                        <option value="" disabled selected>Choisissez un éditeur</option>
+                        {{#each editors}}
+                            <option value="{{id}}">{{name}}</option>
+                        {{/each}}
+                    </select>
+                {{else}}
+                    <p class="form-hint">Aucun éditeur disponible. Ajoutez-en un avant de continuer.</p>
+                {{/if}}
+            </div>
+        </div>
+
+        <label class="toggle">
+            <input type="checkbox" id="highlighted" name="highlighted" />
+            <span>Mettre en avant</span>
+        </label>
+
+        <div class="game-form__actions">
+            <button type="submit" class="cta">Ajouter le jeu</button>
+            <a href="/games" class="ghost">Annuler</a>
+        </div>
+    </form>
+</section>
+

@@ -55,7 +55,7 @@ app.get("/games/create", async (req, res) => {
         prisma.Editor.findMany({ orderBy: { name: "asc" } }),
     ]);
 
-    res.render("games/new", { genres, editors });
+    res.render("games/create", { genres, editors });
 
 });
 

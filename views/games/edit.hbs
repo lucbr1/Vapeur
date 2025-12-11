@@ -1,33 +1,62 @@
-<h1>Edit Game</h1>
-<form action="/games/{{game.id}}" method="POST">
-    <input type="text" id="title" name="title" value="{{game.title}}" required>
-    <textarea id="description" name="description">{{game.description}}</textarea>
-    <input type="datetime-local" id="releaseDate" name="releaseDate" value="{{releaseDateValue}}" required>
+<section class="game-form">
+    <div class="game-form__intro">
+        <h1>Modifier le jeu</h1>
+        <p>Ajustez les informations avant de sauvegarder vos changements.</p>
+    </div>
 
-    {{#if genres.length}}
-        <label for="genre">Genre</label>
-        <select id="genre" name="genreId" required>
-            {{#each genres}}
-                <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
-            {{/each}}
-        </select>
-    {{else}}
-        <p>Aucun genre n'est disponible. Ajoutez-en un avant de modifier le jeu.</p>
-    {{/if}}
+    <form action="/games/{{game.id}}" method="POST" class="game-form__fields">
+        <div class="field">
+            <label for="title">Titre du jeu</label>
+            <input type="text" id="title" name="title" value="{{game.title}}" required />
+        </div>
 
-    {{#if editors.length}}
-        <label for="editor">Éditeur</label>
-        <select id="editor" name="editorId" required>
-            {{#each editors}}
-                <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
-            {{/each}}
-        </select>
-    {{else}}
-        <p>Aucun éditeur n'est disponible. Ajoutez-en un avant de modifier le jeu.</p>
-    {{/if}}
-    
-    <label for="highlighted">Mis en avant</label>
-        <input type="checkbox" id="highlighted" name="highlighted" {{#if game.highlighted}}checked{{/if}}>
-    <button type="submit">Update Game</button>
-</form>
+        <div class="field">
+            <label for="description">Description</label>
+            <textarea id="description" name="description">{{game.description}}</textarea>
+        </div>
+
+        <div class="field">
+            <label for="releaseDate">Date de sortie</label>
+            <input type="datetime-local" id="releaseDate" name="releaseDate" value="{{releaseDateValue}}" required />
+        </div>
+
+        <div class="field-group">
+            <div class="field">
+                <label for="genre">Genre</label>
+                {{#if genres.length}}
+                    <select id="genre" name="genreId" required>
+                        {{#each genres}}
+                            <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
+                        {{/each}}
+                    </select>
+                {{else}}
+                    <p class="form-hint">Aucun genre disponible. Ajoutez-en un avant de modifier le jeu.</p>
+                {{/if}}
+            </div>
+
+            <div class="field">
+                <label for="editor">Éditeur</label>
+                {{#if editors.length}}
+                    <select id="editor" name="editorId" required>
+                        {{#each editors}}
+                            <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
+                        {{/each}}
+                    </select>
+                {{else}}
+                    <p class="form-hint">Aucun éditeur disponible. Ajoutez-en un avant de modifier le jeu.</p>
+                {{/if}}
+            </div>
+        </div>
+
+        <label class="toggle">
+            <input type="checkbox" id="highlighted" name="highlighted" {{#if game.highlighted}}checked{{/if}} />
+            <span>Mettre ce jeu en avant</span>
+        </label>
+
+        <div class="game-form__actions">
+            <button type="submit" class="cta">Mettre à jour</button>
+            <a href="/games/{{game.id}}" class="ghost">Annuler</a>
+        </div>
+    </form>
+</section>
 
