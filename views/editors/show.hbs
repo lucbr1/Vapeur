@@ -18,10 +18,9 @@
     </form>
 </dialog>
 <h2>Jeux publiés par cet éditeur :</h2>
+
 <ul>
-{{#each games}}
-  {{#if (eq editorId ../editor.id)}}
+{{#each editor.games}}
     <li><a href="/games/{{id}}">{{title}}</a></li>
-  {{/if}}
 {{/each}}
 </ul>
