@@ -29,7 +29,7 @@ app.get("/", async (req, res) => {
             genre: true,
             editor: true,
         },
-        orderBy: { releaseDate: "desc" },
+        orderBy: { title: "asc" },
     });
 
     res.render("index", { highlightedGames });
@@ -38,6 +38,7 @@ app.get("/", async (req, res) => {
 //récupérer la liste des jeux
 app.get("/games", async (req, res) => {
     const games = await prisma.Game.findMany({
+        orderBy: { title: "asc" },
         include: {
             genre: true,
             editor: true,
@@ -217,11 +218,11 @@ app.get("/genres/:id", async (req, res) => {
 //Gestion des erreurs 404 et 500
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).send("Something broke!");
+    res.status(500).render("errors/500");
 });
 
 app.use((req, res, next) => {
-    res.status(404).send("Page not found");
+    res.status(404).render("errors/404");
 });
 
 // Démarrage du serveur
