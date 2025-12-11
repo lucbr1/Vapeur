@@ -246,39 +246,6 @@ app.get("/editors/new", (req, res) => {
 });
 
 
-app.post("/editors/new", async (req, res) => {
-    const { name } = req.body;
-    try {
-        const editor = await prisma.editor.create({
-            data: { name },
-        });
-        res.redirect("/editors");
-    } catch (error) {
-        console.error("Erreur lors de la création de l'éditeur :", error);
-        res.status(500).send("Erreur serveur");
-    }
-});
-
-// Route pour afficher le formulaire de création d'un nouvel éditeur
-app.get("/editors/new", (req, res) => {
-    res.render("editors/new");
-});
-
-// Route pour supprimer un éditeur
-app.post("/editors/{{editor.id}}/delete", async (req, res) => {
-    const { name } = req.body;
-    try {
-        const editor = await prisma.editor.delete({
-            where: { name },
-        });
-        res.redirect("/editors");
-    } catch (error) {
-        console.error("Erreur lors de la suppression de l'éditeur :", error);
-        res.status(500).send("Erreur serveur");
-    }
-});
-
-
 // Route pour afficher un éditeur spécifique
 app.get("/editors/:id", async (req, res, next) => {
     const editorId = parseInt(req.params.id, 10);
@@ -287,7 +254,7 @@ app.get("/editors/:id", async (req, res, next) => {
             where: { id: editorId },
             include: {
                 games: {
-                    orderBy: { title: 'asc' } // tri correct
+                    orderBy: { title: 'asc' } 
                 }
             }
         });
@@ -301,7 +268,6 @@ app.get("/editors/:id", async (req, res, next) => {
         next(error);
     }
 });
-
 
 
 //Gestion des erreurs 404 et 500
