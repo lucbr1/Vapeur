@@ -70,35 +70,26 @@ app.post("/games", async (req, res) => {
         editorId,
     } = req.body;
 
-    if (!title || !releaseDate || !genreId || !editorId) {
-        return res.status(400).send("Missing required fields");
+    if (!title || !title.trim()) {
+        return res.status(400).send("Title is required");
     }
 
-    const releaseDateValue = new Date(releaseDate);
-    if (Number.isNaN(releaseDateValue.getTime())) {
-        return res.status(400).send("Invalid release date");
-    }
+    const releaseDateValue = releaseDate ? new Date(releaseDate) : null;
+    const genreIdInt = genreId ? parseInt(genreId, 10) : null;
+    const editorIdInt = editorId ? parseInt(editorId, 10) : null;
 
-    const genreIdInt = parseInt(genreId, 10);
-    const editorIdInt = parseInt(editorId, 10);
+    const newGame = await prisma.Game.create({
+        data: {
+            title: title.trim(),
+            description,
+            releaseDate: releaseDateValue,
+            highlighted: highlighted === "on",
+            genreId: genreIdInt,
+            editorId: editorIdInt,
+        },
+    });
 
-    try {
-        const newGame = await prisma.Game.create({
-            data: {
-                title,
-                description,
-                releaseDate: releaseDateValue,
-                highlighted: highlighted === "on",
-                genreId: genreIdInt,
-                editorId: editorIdInt,
-            },
-        });
-
-        return res.redirect(`/games/${newGame.id}`);
-    } catch (error) {
-        console.error("Failed to create game", error);
-        return res.status(500).send("Unable to create game");
-    }
+    return res.redirect(`/games/${newGame.id}`);
 });
 
 //Détails d'un jeu
@@ -116,7 +107,9 @@ app.get("/games/:id", async (req, res) => {
         return res.status(404).send("Game not found");
     }
 
-    const formattedReleaseDate = new Date(game.releaseDate).toLocaleDateString("fr-FR");
+    const formattedReleaseDate = game.releaseDate
+        ? new Date(game.releaseDate).toLocaleDateString("fr-FR")
+        : "";
 
     res.render("games/details", {
         game,
@@ -173,34 +166,25 @@ app.post("/games/:id", async (req, res) => {
         editorId,
     } = req.body;
 
-    if (!title || !releaseDate || !genreId || !editorId) {
-        return res.status(400).send("Missing required fields");
+    if (!title || !title.trim()) {
+        return res.status(400).send("Title is required");
     }
 
-    const releaseDateValue = new Date(releaseDate);
-    if (Number.isNaN(releaseDateValue.getTime())) {
-        return res.status(400).send("Invalid release date");
-    }
+    const releaseDateValue = releaseDate ? new Date(releaseDate) : null;
+    const genreIdInt = genreId ? parseInt(genreId, 10) : null;
+    const editorIdInt = editorId ? parseInt(editorId, 10) : null;
 
-    const genreIdInt = parseInt(genreId, 10);
-    const editorIdInt = parseInt(editorId, 10);
-
-    try {
-        await prisma.Game.update({
-            where: { id: gameId },
-            data: {
-                title,
-                description,
-                releaseDate: releaseDateValue,
-                highlighted: highlighted === "on",
-                genreId: genreIdInt,
-                editorId: editorIdInt,
-            },
-        });
-    } catch (error) {
-        console.error("Failed to update game", error);
-        return res.status(500).send("Unable to update game");
-    }
+    await prisma.Game.update({
+        where: { id: gameId },
+        data: {
+            title: title.trim(),
+            description,
+            releaseDate: releaseDateValue,
+            highlighted: highlighted === "on",
+            genreId: genreIdInt,
+            editorId: editorIdInt,
+        },
+    });
 
     res.redirect(`/games/${gameId}`);
 });
@@ -208,14 +192,9 @@ app.post("/games/:id", async (req, res) => {
 app.post("/games/:id/delete", async (req, res) => {
     const gameId = parseInt(req.params.id, 10);
 
-    try {
-        await prisma.Game.delete({
-            where: { id: gameId },
-        });
-    } catch (error) {
-        console.error("Failed to delete game", error);
-        return res.status(500).send("Unable to delete game");
-    }
+    await prisma.Game.delete({
+        where: { id: gameId },
+    });
 
     res.redirect("/games");
 });

@@ -24,7 +24,7 @@
             <div class="field">
                 <label for="genre">Genre</label>
                 {{#if genres}}
-                    <select id="genre" name="genreId" required>
+                    <select id="genre" name="genreId" >
                         <option value="" disabled selected>Choisissez un genre</option>
                         {{#each genres}}
                             <option value="{{id}}">{{name}}</option>
@@ -38,7 +38,7 @@
             <div class="field">
                 <label for="editor">Éditeur</label>
                 {{#if editors}}
-                    <select id="editor" name="editorId" required>
+                    <select id="editor" name="editorId" >
                         <option value="" disabled selected>Choisissez un éditeur</option>
                         {{#each editors}}
                             <option value="{{id}}">{{name}}</option>

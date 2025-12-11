@@ -17,14 +17,14 @@
 
         <div class="field">
             <label for="releaseDate">Date de sortie</label>
-            <input type="datetime-local" id="releaseDate" name="releaseDate" value="{{releaseDateValue}}" required />
+            <input type="datetime-local" id="releaseDate" name="releaseDate" value="{{releaseDateValue}}"  />
         </div>
 
         <div class="field-group">
             <div class="field">
                 <label for="genre">Genre</label>
                 {{#if genres.length}}
-                    <select id="genre" name="genreId" required>
+                    <select id="genre" name="genreId" >
                         {{#each genres}}
                             <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
                         {{/each}}
@@ -37,7 +37,7 @@
             <div class="field">
                 <label for="editor">Éditeur</label>
                 {{#if editors.length}}
-                    <select id="editor" name="editorId" required>
+                    <select id="editor" name="editorId" >
                         {{#each editors}}
                             <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
                         {{/each}}
