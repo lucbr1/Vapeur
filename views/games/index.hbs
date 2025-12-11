@@ -1,0 +1,14 @@
+<h1>Liste des jeux</h1>
+
+<ul>
+    {{#each games}}
+        <li>
+            <a href="/games/{{id}}">{{title}}</a> <!-- on accède directement aux propriétés de l'objet courant -->
+        </li>
+    {{/each}}
+</ul>
+
+<form action="/games/create" method="GET">
+    <button type="submit">Créer un jeu</button>
+</form>
+

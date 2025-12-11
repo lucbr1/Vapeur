@@ -1,0 +1,33 @@
+<h1>Edit Game</h1>
+<form action="/games/{{game.id}}" method="POST">
+    <input type="text" id="title" name="title" value="{{game.title}}" required>
+    <textarea id="description" name="description">{{game.description}}</textarea>
+    <input type="datetime-local" id="releaseDate" name="releaseDate" value="{{releaseDateValue}}" required>
+
+    {{#if genres.length}}
+        <label for="genre">Genre</label>
+        <select id="genre" name="genreId" required>
+            {{#each genres}}
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
+            {{/each}}
+        </select>
+    {{else}}
+        <p>Aucun genre n'est disponible. Ajoutez-en un avant de modifier le jeu.</p>
+    {{/if}}
+
+    {{#if editors.length}}
+        <label for="editor">Éditeur</label>
+        <select id="editor" name="editorId" required>
+            {{#each editors}}
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
+            {{/each}}
+        </select>
+    {{else}}
+        <p>Aucun éditeur n'est disponible. Ajoutez-en un avant de modifier le jeu.</p>
+    {{/if}}
+    
+    <label for="highlighted">Mis en avant</label>
+        <input type="checkbox" id="highlighted" name="highlighted" {{#if game.highlighted}}checked{{/if}}>
+    <button type="submit">Update Game</button>
+</form>
+

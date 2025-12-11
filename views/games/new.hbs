@@ -1,0 +1,31 @@
+    <form action="/games" method="POST">
+        <input type="text" id="title" name="title" placeholder="Game Title" required>
+        <textarea id="description" name="description" placeholder="Description"></textarea>
+        <input type="datetime-local" id="releaseDate" name="releaseDate" placeholder="Release Date">
+        {{#if genres}}
+            <label for="genre">Genre</label>
+            <select id="genre" name="genreId" required>
+                <option value="" disabled selected>Choisissez un genre</option>
+                {{#each genres}}
+                    <option value="{{id}}">{{name}}</option>
+                {{/each}}
+            </select>
+        {{else}}
+            <p>Aucun genre disponible. Ajoutez un genre avant de créer un jeu.</p>
+        {{/if}}
+        {{#if editors}}
+            <label for="editor">Éditeur</label>
+            <select id="editor" name="editorId" required>
+                <option value="" disabled selected>Choisissez un éditeur</option>
+                {{#each editors}}
+                    <option value="{{id}}">{{name}}</option>
+                {{/each}}
+            </select>
+        {{else}}
+            <p>Aucun éditeur disponible. Ajoutez un éditeur avant de créer un jeu.</p>
+        {{/if}}
+        <label for="highlighted">Mis en avant</label>
+        <input type="checkbox" id="highlighted" name="highlighted">
+        <button type="submit">ajouter le jeu</button>
+    </form>
+

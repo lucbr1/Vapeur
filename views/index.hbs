@@ -1,1 +1,25 @@
 <h1>Bienvenue sur la page d'accueil de l'application Vapeur !</h1>
+
+<section>
+	<h2>Jeux mis en avant</h2>
+
+	{{#if highlightedGames.length}}
+		<ul>
+			{{#each highlightedGames}}
+				<li>
+					{{#if genre}}
+						Genre : {{genre.name}}
+					{{/if}}
+					{{#if editor}}
+						— Éditeur : {{editor.name}}
+					{{/if}}
+                    - nom du jeux : <strong>{{title}}</strong>
+					<a href="/games/{{id}}">Voir</a>
+				</li>
+			{{/each}}
+		</ul>
+	{{else}}
+		<p>Aucun jeu n'est mis en avant pour le moment.</p>
+	{{/if}}
+</section>
+
