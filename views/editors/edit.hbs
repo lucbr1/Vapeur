@@ -1,7 +1,10 @@
-<form action="/editors/edit" method="POST">
+{{#if error}}
+  <p style="color: red;">{{error}}</p>
+{{/if}}
+<form action="/editors/{{editor.id}}/edit" method="POST">
   <div>
     <label for="name">Nouveau nom de l'éditeur:</label>
-    <input type="text" id="name" name="name" required>
+    <input type="text" id="name" name="name" value="{{editor.name}}" required>
   </div>
   <button type="submit">Appliquer les modifications</button>
 </form>

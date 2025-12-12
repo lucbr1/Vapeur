@@ -21,7 +21,7 @@ model Game {
   highlighted Boolean  @default(false)
   genre Genre? @relation(fields: [genreId], references: [id])
   genreId Int?
-  editor Editor? @relation(fields: [editorId], references: [id])
+  editor Editor? @relation(fields: [editorId], references: [id], onDelete: SetNull)
   editorId Int?
 }
 
