@@ -29,7 +29,7 @@ app.get("/", async (req, res) => {
             genre: true,
             editor: true,
         },
-        orderBy: { releaseDate: "desc" },
+        orderBy: { title: "asc" },
     });
 
     res.render("index", { highlightedGames });
@@ -38,6 +38,7 @@ app.get("/", async (req, res) => {
 //récupérer la liste des jeux
 app.get("/games", async (req, res) => {
     const games = await prisma.Game.findMany({
+        orderBy: { title: "asc" },
         include: {
             genre: true,
             editor: true,
@@ -71,7 +72,7 @@ app.post("/games", async (req, res) => {
     } = req.body;
 
     if (!title || !title.trim()) {
-        return res.status(400).send("Title is required");
+        return res.status(400).render("errors/400", { message: "Title is required" });
     }
 
     const releaseDateValue = releaseDate ? new Date(releaseDate) : null;
@@ -104,7 +105,7 @@ app.get("/games/:id", async (req, res) => {
     });
 
     if (!game) {
-        return res.status(404).send("Game not found");
+        return res.status(404).render("errors/404");
     }
 
     const formattedReleaseDate = game.releaseDate
@@ -130,7 +131,7 @@ app.get("/games/:id/edit", async (req, res) => {
     ]);
 
     if (!game) {
-        return res.status(404).send("Game not found");
+        return res.status(404).render("errors/404");
     }
 
     const releaseDateValue = game.releaseDate
@@ -167,7 +168,7 @@ app.post("/games/:id", async (req, res) => {
     } = req.body;
 
     if (!title || !title.trim()) {
-        return res.status(400).send("Title is required");
+        return res.status(400).render("errors/400", { message: "Title is required" });
     }
 
     const releaseDateValue = releaseDate ? new Date(releaseDate) : null;
@@ -218,11 +219,11 @@ app.get("/genres/:id", async (req, res) => {
 //Gestion des erreurs 404 et 500
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).send("Something broke!");
+    res.status(500).render("errors/500");
 });
 
 app.use((req, res, next) => {
-    res.status(404).send("Page not found");
+    res.status(404).render("errors/404");
 });
 
 // Démarrage du serveur
