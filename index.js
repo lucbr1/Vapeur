@@ -72,7 +72,7 @@ app.post("/games", async (req, res) => {
     } = req.body;
 
     if (!title || !title.trim()) {
-        return res.status(400).send("Title is required");
+        return res.status(400).render("errors/400", { message: "Title is required" });
     }
 
     const releaseDateValue = releaseDate ? new Date(releaseDate) : null;
@@ -105,7 +105,7 @@ app.get("/games/:id", async (req, res) => {
     });
 
     if (!game) {
-        return res.status(404).send("Game not found");
+        return res.status(404).render("errors/404");
     }
 
     const formattedReleaseDate = game.releaseDate
@@ -131,7 +131,7 @@ app.get("/games/:id/edit", async (req, res) => {
     ]);
 
     if (!game) {
-        return res.status(404).send("Game not found");
+        return res.status(404).render("errors/404");
     }
 
     const releaseDateValue = game.releaseDate
@@ -168,7 +168,7 @@ app.post("/games/:id", async (req, res) => {
     } = req.body;
 
     if (!title || !title.trim()) {
-        return res.status(400).send("Title is required");
+        return res.status(400).render("errors/400", { message: "Title is required" });
     }
 
     const releaseDateValue = releaseDate ? new Date(releaseDate) : null;
