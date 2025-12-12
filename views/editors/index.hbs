@@ -1,10 +1,10 @@
 <h1>Welcome to the Editor Page</h1>
 <ul>
 {{#each editors }}
-<li>{{name}}</li>
+<li><a href="/editors/{{id}}">{{name}}</a></li>
 {{/each}}
 </ul>
 
-<form action="/games/{{editors.id}}/add" method="GET">
+<form action="/editors/new" method="GET">
     <button type="submit">Ajouter un éditeur</button>
 </form> 
