@@ -222,6 +222,118 @@ app.get("/editors", async (req, res) => {
     res.render("editors/index", { editors });
 });
 
+// Route pour afficher le formulaire de modification d'un éditeur
+app.get("/editors/:id/edit", async (req, res, next) => {
+    const editorId = parseInt(req.params.id, 10);
+    try {
+        const editor = await prisma.editor.findUnique({
+            where: { id: editorId },
+        });
+        if (editor) {
+            res.render("editors/edit", { editor });
+        } else {
+            res.status(404).send("Editor not found");
+        }
+    }
+    catch (error) {
+        next(error);
+    }
+});
+
+// Route pour afficher le formulaire de création d'un nouvel éditeur
+app.get("/editors/new", (req, res) => {
+    res.render("editors/new");
+});
+
+// Route pour créer un nouvel éditeur
+app.post("/editors/new", async (req, res) => {
+    const {
+        name,
+    } = req.body;
+
+    if (!name || !name.trim()) {
+        return res.render("editors/new", { error: "Le nom est requis." });
+    }
+
+    try {
+        const newEditor = await prisma.editor.create({
+            data: {
+                name: name.trim(),
+            },
+        });
+
+        return res.redirect(`/editors/${newEditor.id}`);
+    } catch (error) {
+        console.error("Erreur lors de la création de l'éditeur :", error);
+        return res.render("editors/new", { error: "L'éditeur existe déjà ou problème de base de données." });
+    }
+});
+
+// Route pour supprimer un éditeur
+app.post("/editors/:id/delete", async (req, res) => {
+    const editorId = parseInt(req.params.id, 10);
+
+    try {
+        await prisma.editor.delete({
+            where: { id: editorId }
+        });
+
+        res.redirect("/editors");
+    } catch (error) {
+        console.error("Erreur lors de la suppression de l'éditeur :", error);
+        res.status(500).send("Erreur : Impossible de supprimer l'éditeur (il a peut-être des jeux associés).");
+    }
+});
+
+// Route pour mettre à jour un éditeur
+app.post("/editors/:id/edit", async (req, res, next) => {
+    const editorId = parseInt(req.params.id, 10);
+    const {
+        name,
+    } = req.body;
+
+    if (!name || !name.trim()) {
+        const editor = await prisma.editor.findUnique({ where: { id: editorId } });
+        return res.render("editors/edit", { editor, error: "Le nom est requis." });
+    }
+
+    try {
+        await prisma.editor.update({
+            where: { id: editorId },
+            data: {
+                name: name.trim(),
+            },
+        });
+        res.redirect(`/editors/${editorId}`);
+    } catch (error) {
+        console.error("Erreur lors de la mise à jour de l'éditeur :", error);
+        const editor = await prisma.editor.findUnique({ where: { id: editorId } });
+        res.render("editors/edit", { editor, error: "L'éditeur existe déjà ou problème de base de données." });
+    }
+});
+
+// Route pour afficher un éditeur spécifique
+app.get("/editors/:id", async (req, res, next) => {
+    const editorId = parseInt(req.params.id, 10);
+    try {
+        const editor = await prisma.editor.findUnique({
+            where: { id: editorId },
+            include: {
+                games: {
+                    orderBy: { title: 'asc' } 
+                }
+            }
+        });
+        if (editor) {
+            res.render("editors/show", { editor });
+        } else {
+            res.status(404).send("Editor not found");
+        }
+    } catch (error) {
+        console.error("Erreur Prisma :", error);
+        next(error);
+    }
+});
 
 
 //Gestion des erreurs 404 et 500

@@ -1,0 +1,26 @@
+<h1> {{editor.name}}</h1> 
+<form action="/editors/{{editor.id}}/edit" method="GET">
+    <button type="submit">Modifier l'éditeur</button>
+</form> 
+
+ <button type="button" onclick="document.getElementById('deleteDialog').showModal()">
+    Supprimer l'éditeur
+</button>
+
+<dialog id="deleteDialog">
+    <h2>Supprimer l'éditeur</h2>
+    <p>Êtes-vous sûr de vouloir supprimer "{{editor.name}}" ?</p>
+    <form method="dialog">
+        <button type="submit">Annuler</button>
+    </form>
+    <form action="/editors/{{editor.id}}/delete" method="POST">
+        <button type="submit">Confirmer la suppression</button>
+    </form>
+</dialog>
+<h2>Jeux publiés par cet éditeur :</h2>
+
+<ul>
+{{#each editor.games}}
+    <li><a href="/games/{{id}}">{{title}}</a></li>
+{{/each}}
+</ul>
