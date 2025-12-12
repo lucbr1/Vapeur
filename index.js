@@ -76,8 +76,8 @@ app.post("/games", async (req, res) => {
     }
 
     const releaseDateValue = releaseDate ? new Date(releaseDate) : null;
-    const genreIdInt = genreId ? parseInt(genreId, 10) : null;
-    const editorIdInt = editorId ? parseInt(editorId, 10) : null;
+    const genreIdInt = genreId ? parseInt(genreId) : null;
+    const editorIdInt = editorId ? parseInt(editorId) : null;
 
     const newGame = await prisma.Game.create({
         data: {
@@ -120,7 +120,7 @@ app.get("/games/:id", async (req, res) => {
 
 //modification d'un jeu
 app.get("/games/:id/edit", async (req, res) => {
-    const gameId = parseInt(req.params.id, 10);
+    const gameId = parseInt(req.params.id);
 
     const [game, genres, editors] = await Promise.all([
         prisma.Game.findUnique({
@@ -157,7 +157,7 @@ app.get("/games/:id/edit", async (req, res) => {
 });
 
 app.post("/games/:id", async (req, res) => {
-    const gameId = parseInt(req.params.id, 10);
+    const gameId = parseInt(req.params.id);
     const {
         title,
         description,
@@ -172,8 +172,8 @@ app.post("/games/:id", async (req, res) => {
     }
 
     const releaseDateValue = releaseDate ? new Date(releaseDate) : null;
-    const genreIdInt = genreId ? parseInt(genreId, 10) : null;
-    const editorIdInt = editorId ? parseInt(editorId, 10) : null;
+    const genreIdInt = genreId ? parseInt(genreId) : null;
+    const editorIdInt = editorId ? parseInt(editorId) : null;
 
     await prisma.Game.update({
         where: { id: gameId },
@@ -192,7 +192,7 @@ app.post("/games/:id", async (req, res) => {
 
 //suppression d'un jeu
 app.post("/games/:id/delete", async (req, res) => {
-    const gameId = parseInt(req.params.id, 10);
+    const gameId = parseInt(req.params.id);
 
     await prisma.Game.delete({
         where: { id: gameId },
