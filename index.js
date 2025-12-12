@@ -189,6 +189,7 @@ app.post("/games/:id", async (req, res) => {
     res.redirect(`/games/${gameId}`);
 });
 
+//suppression d'un jeu
 app.post("/games/:id/delete", async (req, res) => {
     const gameId = parseInt(req.params.id, 10);
 
