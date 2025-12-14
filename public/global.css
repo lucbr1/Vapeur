@@ -124,6 +124,37 @@ section {
 	letter-spacing: 0.02em;
 }
 
+.game-details__link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	margin-top: 0.5rem;
+	font-size: 1.2rem;
+	font-weight: 600;
+	color: var(--accent);
+	text-decoration: none;
+	padding: 0.35rem 0.9rem;
+	border-radius: 999px;
+	border: 1px solid rgba(77, 208, 225, 0.5);
+	background: rgba(77, 208, 225, 0.14);
+	transition: transform 200ms ease, background 200ms ease, border 200ms ease, color 200ms ease;
+}
+
+.game-details__link:hover,
+.game-details__link:focus-visible {
+	color: var(--accent-strong);
+	background: rgba(255, 109, 179, 0.18);
+	border-color: rgba(255, 109, 179, 0.55);
+	transform: translateY(-2px);
+}
+
+.game-details__placeholder {
+	margin: 0.5rem 0 0;
+	font-size: 1rem;
+	color: var(--muted);
+	font-style: italic;
+}
+
 .game-details__actions {
 	display: flex;
 	flex-wrap: wrap;

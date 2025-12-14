@@ -25,6 +25,7 @@
                 <label for="genre">Genre</label>
                 {{#if genres.length}}
                     <select id="genre" name="genreId" >
+                        <option value="" {{#unless game.genreId}}selected{{/unless}}>Aucun genre</option>
                         {{#each genres}}
                             <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
                         {{/each}}
@@ -38,6 +39,7 @@
                 <label for="editor">Éditeur</label>
                 {{#if editors.length}}
                     <select id="editor" name="editorId" >
+                        <option value="" {{#unless game.editorId}}selected{{/unless}}>Aucun éditeur</option>
                         {{#each editors}}
                             <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
                         {{/each}}
