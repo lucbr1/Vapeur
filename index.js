@@ -241,18 +241,18 @@ app.get("/editors/:id/edit", async (req, res, next) => {
 });
 
 // Route pour afficher le formulaire de création d'un nouvel éditeur
-app.get("/editors/new", (req, res) => {
-    res.render("editors/new");
+app.get("/editors/create", (req, res) => {
+    res.render("editors/create");
 });
 
 // Route pour créer un nouvel éditeur
-app.post("/editors/new", async (req, res) => {
+app.post("/editors", async (req, res) => {
     const {
         name,
     } = req.body;
 
     if (!name || !name.trim()) {
-        return res.render("editors/new", { error: "Le nom est requis." });
+        return res.render("editors/create", { error: "Le nom est requis." });
     }
 
     try {
@@ -265,7 +265,7 @@ app.post("/editors/new", async (req, res) => {
         return res.redirect(`/editors/${newEditor.id}`);
     } catch (error) {
         console.error("Erreur lors de la création de l'éditeur :", error);
-        return res.render("editors/new", { error: "L'éditeur existe déjà ou problème de base de données." });
+        return res.render("editors/create", { error: "L'éditeur existe déjà ou problème de base de données." });
     }
 });
 
@@ -286,7 +286,7 @@ app.post("/editors/:id/delete", async (req, res) => {
 });
 
 // Route pour mettre à jour un éditeur
-app.post("/editors/:id/edit", async (req, res, next) => {
+app.post("/editors/:id", async (req, res, next) => {
     const editorId = parseInt(req.params.id, 10);
     const {
         name,
@@ -325,7 +325,7 @@ app.get("/editors/:id", async (req, res, next) => {
             }
         });
         if (editor) {
-            res.render("editors/show", { editor });
+            res.render("editors/details", { editor });
         } else {
             res.status(404).send("Editor not found");
         }

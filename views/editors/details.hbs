@@ -1,0 +1,52 @@
+<section class="game-details editor-details">
+    <div class="game-details__hero">
+        <span class="game-details__pill">Éditeur</span>
+        <h1>{{editor.name}}</h1>
+        <p class="editor-details__summary">{{editor.games.length}} jeu(x) actuellement disponibles sur Vapeur.</p>
+    </div>
+
+    <div class="game-details__actions">
+        <form action="/editors/{{editor.id}}/edit" method="GET">
+            <button type="submit" class="cta">Modifier l'éditeur</button>
+        </form>
+        <button type="button" class="danger" onclick="document.getElementById('deleteDialog').showModal()">
+            Supprimer l'éditeur
+        </button>
+    </div>
+</section>
+
+<dialog id="deleteDialog" class="game-details__dialog editor-details__dialog">
+    <h2>Supprimer l'éditeur</h2>
+    <p>Êtes-vous sûr de vouloir supprimer « {{editor.name}} » ? Cette action est définitive.</p>
+    <div class="game-details__dialog-actions">
+        <form method="dialog">
+            <button type="submit" class="ghost">Annuler</button>
+        </form>
+        <form action="/editors/{{editor.id}}/delete" method="POST">
+            <button type="submit" class="danger">Confirmer la suppression</button>
+        </form>
+    </div>
+</dialog>
+
+<section class="editor-games">
+    <div class="editor-games__header">
+        <div>
+            <h2>Jeux publiés</h2>
+            <p>La sélection des titres signés {{editor.name}}.</p>
+        </div>
+    </div>
+
+    {{#if editor.games.length}}
+        <ul class="editor-games__list">
+            {{#each editor.games}}
+                <li>
+                    <strong>Jeu</strong>
+                    <p>{{title}}</p>
+                    <a href="/games/{{id}}">Voir la fiche</a>
+                </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <p class="editor-games__empty">Aucun jeu n'est encore associé à cet éditeur.</p>
+    {{/if}}
+</section>

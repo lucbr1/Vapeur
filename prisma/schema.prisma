@@ -19,9 +19,9 @@ model Game {
   description String?
   releaseDate DateTime?
   highlighted Boolean  @default(false)
-  genre Genre? @relation(fields: [genreId], references: [id])
+  genre Genre? @relation(fields: [genreId], references: [id], onDelete: SetNull)
   genreId Int?
-  editor Editor? @relation(fields: [editorId], references: [id])
+  editor Editor? @relation(fields: [editorId], references: [id], onDelete: SetNull)
   editorId Int?
 }
 

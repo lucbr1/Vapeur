@@ -1,7 +1,11 @@
 <h1>Jeux du genre : {{genre.name}}</h1>
 
-<ul class="genres-list">
-    {{#each genre.games}}
-        <li><a href="/games/{{id}}">{{title}}</a></li>
-    {{/each}}
-</ul>
+{{#if genre.games.length}}
+    <ul class="genres-list">
+        {{#each genre.games}}
+            <li><a href="/games/{{id}}">{{title}}</a></li>
+        {{/each}}
+    </ul>
+{{else}}
+    <p class="genres-list__empty">Aucun jeu n'est encore associé à ce genre.</p>
+{{/if}}

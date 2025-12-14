@@ -1,10 +1,22 @@
-{{#if error}}
-  <p style="color: red;">{{error}}</p>
-{{/if}}
-<form action="/editors/{{editor.id}}/edit" method="POST">
-  <div>
-    <label for="name">Nouveau nom de l'éditeur:</label>
-    <input type="text" id="name" name="name" value="{{editor.name}}" required>
+<section class="game-form editor-form">
+  <div class="game-form__intro">
+    <h1>Modifier l'éditeur</h1>
+    <p>Mettez à jour l'identité de {{editor.name}} pour harmoniser vos fiches.</p>
   </div>
-  <button type="submit">Appliquer les modifications</button>
-</form>
+
+  {{#if error}}
+    <p class="form-error">{{error}}</p>
+  {{/if}}
+
+  <form action="/editors/{{editor.id}}" method="POST" class="game-form__fields">
+    <div class="field">
+      <label for="name">Nouveau nom de l'éditeur</label>
+      <input type="text" id="name" name="name" value="{{editor.name}}" required>
+    </div>
+
+    <div class="game-form__actions">
+      <a href="/editors/{{editor.id}}" class="ghost">Annuler</a>
+      <button type="submit" class="cta">Appliquer les modifications</button>
+    </div>
+  </form>
+</section>

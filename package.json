@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "seeds": "node prisma/seed.js",
-    "start" : "npm run seeds && node index.js",
+    "start": "npm run seeds && node index.js",
     "dev": "npm run seeds && nodemon index.js"
   },
   "repository": {
