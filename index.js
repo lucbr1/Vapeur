@@ -232,7 +232,7 @@ app.get("/editors/:id/edit", async (req, res, next) => {
         if (editor) {
             res.render("editors/edit", { editor });
         } else {
-            res.status(404).send("Editor not found");
+            res.status(404).render("errors/404");
         }
     }
     catch (error) {
@@ -281,7 +281,7 @@ app.post("/editors/:id/delete", async (req, res) => {
         res.redirect("/editors");
     } catch (error) {
         console.error("Erreur lors de la suppression de l'éditeur :", error);
-        res.status(500).send("Erreur : Impossible de supprimer l'éditeur (il a peut-être des jeux associés).");
+        res.status(500).render("errors/500");
     }
 });
 
@@ -327,7 +327,7 @@ app.get("/editors/:id", async (req, res, next) => {
         if (editor) {
             res.render("editors/details", { editor });
         } else {
-            res.status(404).send("Editor not found");
+            res.status(404).render("errors/404");
         }
     } catch (error) {
         console.error("Erreur Prisma :", error);
