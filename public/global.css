@@ -589,6 +589,20 @@ header {
 	gap: 2rem;
 	backdrop-filter: blur(14px);
 }
+.header__brand {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+
+.header__logo {
+	width: clamp(60px, 7vw, 88px);
+	height: clamp(60px, 7vw, 88px);
+	object-fit: contain;
+	filter: drop-shadow(0 12px 35px rgba(0, 0, 0, 0.45));
+	border-radius: 16px;
+	padding: 0.35rem;
+}
 
 header h1 {
 	margin: 0;
