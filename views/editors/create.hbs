@@ -1,0 +1,22 @@
+<section class="game-form editor-form">
+  <div class="game-form__intro">
+    <h1>Nouvel éditeur</h1>
+    <p>Ajoutez un partenaire pour enrichir vos fiches de jeux sur Vapeur.</p>
+  </div>
+
+  {{#if error}}
+    <p class="form-error">{{error}}</p>
+  {{/if}}
+
+  <form action="/editors" method="POST" class="game-form__fields">
+    <div class="field">
+      <label for="name">Nom de l'éditeur</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+
+    <div class="game-form__actions">
+      <a href="/editors" class="ghost">Annuler</a>
+      <button type="submit" class="cta">Créer l'éditeur</button>
+    </div>
+  </form>
+</section>

@@ -1,10 +1,15 @@
-<h1>Welcome to the Editor Page</h1>
-<ul>
-{{#each editors }}
-<li><a href="/editors/{{id}}">{{name}}</a></li>
-{{/each}}
-</ul>
+<div class="collection-header">
+    <div>
+        <h1>Éditeurs</h1>
+        <p>Retrouvez tous les partenaires qui alimentent la bibliothèque Vapeur.</p>
+    </div>
+    <form action="/editors/create" method="GET">
+        <button type="submit" class="cta">Ajouter un éditeur</button>
+    </form>
+</div>
 
-<form action="/editors/new" method="GET">
-    <button type="submit">Ajouter un éditeur</button>
-</form> 
+<ul class="genres-list editors-list">
+    {{#each editors}}
+        <li><a href="/editors/{{id}}">{{name}}</a></li>
+    {{/each}}
+</ul>

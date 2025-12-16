@@ -14,11 +14,19 @@
 		</div>
 		<div class="game-details__item">
 			<span class="label">Genre</span>
-			<p>{{game.genre.name}}</p>
+			{{#if game.genre}}
+				<a class="game-details__link" href="/genres/{{game.genre.id}}">{{game.genre.name}}</a>
+			{{else}}
+				<p class="game-details__placeholder">Aucun genre renseigné</p>
+			{{/if}}
 		</div>
 		<div class="game-details__item">
 			<span class="label">Éditeur</span>
-			<p>{{game.editor.name}}</p>
+			{{#if game.editor}}
+				<a class="game-details__link" href="/editors/{{game.editor.id}}">{{game.editor.name}}</a>
+			{{else}}
+				<p class="game-details__placeholder">Aucun éditeur renseigné</p>
+			{{/if}}
 		</div>
 	</div>
 
