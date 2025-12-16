@@ -67,27 +67,28 @@ L’application est développée dans le cadre d’un projet pédagogique et res
 git clone https://github.com/lucbr1/Vapeur
 ```
 
-2. Installer les dépendances :
+2. Créer le fichier .env :
+
+```
+Vous devez definir le .env dans le dossier global ainsi que le DATABASE_URL dans le fichier .env tel que : DATABASE_URL="votre url"
+```
+
+3. Installer les dépendances :
 
 ```bash
 npm install
 ```
 
-3. Appliquer les migrations Prisma :
+4. Appliquer les migrations Prisma :
 
 ```bash
 npx prisma migrate deploy
 ```
 
-4. Générer le client Prisma :
+5. Générer le client Prisma :
 
 ```bash
 npx prisma generate
-```
-
-5. Créer le fichier .env :
-
-```vous devez definir le .env dans le dossier global ainsi que le DATABASE_URL dans le fichier .env tel que : DATABASE_URL="votre url"
 ```
 
 6. Lancer l’application :
@@ -110,10 +111,11 @@ http://localhost:3080
 * Le fichier de base de données n’est **pas versionné** (non commité)
 * Les migrations Prisma doivent être appliquées avant le premier lancement
 * Les genres sont automatiquement créés au démarrage de l'application s’ils n’existent pas encore
+* 2 jeux et 2 éditeurs sont également ajoutés pour une utiliasation plus directe et représentative
 
 ---
 
-## Structure du projet <à modifier>
+## Structure du projet 
 
 ```
 ├── prisma/
