@@ -117,8 +117,8 @@ npm run start
 ---
 
 ### 👥 Auteurs
-- **Mathis GILGENKRANTZ**
-- **Jordan PASQUALINI**
+- **Mathis GILGENKRANTZ** ([@Mothisma](https://github.com/Mothisma))
+- **Jordan PASQUALINI** ([@jijoxP](https://github.com/jijoxP))
 - **Lucas BRUN** ([@lucbr1](https://github.com/lucbr1))
 
 ---
