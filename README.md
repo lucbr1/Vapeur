@@ -1,189 +1,191 @@
-# Vapeur
+<div align="center">
 
-Vapeur est une application web permettant de gérer une collection de jeux vidéo. Elle offre la possibilité de consulter, créer, modifier et supprimer des jeux et leurs éditeurs associés, ainsi que de consulter leurs genres.
+# 🎮 Vapeur
 
-L’application est développée dans le cadre d’un projet pédagogique et respecte un cahier des charges précis, incluant l’utilisation d’Express.js, SQLite, Prisma et Handlebars.
+*Une application web de gestion de ludothèque vidéo-ludique (CRUD).*  
+*A web application to manage a video game collection (CRUD).*
 
----
+![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)
+![Handlebars](https://img.shields.io/badge/Handlebars-000000?style=for-the-badge&logo=handlebars.js&logoColor=orange)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 
-## Fonctionnalités
+[🌐 Version Française](#-version-française) • [🇬🇧 English Version](#-english-version)
 
-### Jeux vidéo
-
-* Affichage des jeux mis en avant sur la page d’accueil
-* Affichage de tous les jeux sur une page dédiée
-* Consultation du détail d’un jeu (titre, description, date de sortie, genre, éditeur)
-* Création d’un jeu
-* Modification d’un jeu
-* Suppression d’un jeu
-* Possibilité de mettre un jeu en avant sur la page d’accueil
-
-### Genres de jeux
-
-* Genres prédéfinis : Action, Aventure, RPG, Simulation, Sport, MMORPG
-* Génération automatique des genres au démarrage de l'application s’ils n’existent pas
-* Affichage de la liste des genres
-* Affichage des jeux associés à un genre
-
-### Éditeurs
-
-* Création d’un éditeur
-* Modification d’un éditeur
-* Suppression d’un éditeur
-* Affichage de la liste des éditeurs
-* Affichage des jeux associés à un éditeur
-
-### Général
-
-* Navigation principale entre les différentes sections
-* Toutes les listes sont triées par ordre alphabétique
-* Tous les éléments sont cliquables et renvoient vers leurs pages de détail
+</div>
 
 ---
 
-## Technologies utilisées
+## 🇫🇷 Version Française
 
-* **Node.js**
-* **Express.js** : framework web
-* **SQLite** : base de données
-* **Prisma** : ORM et gestion des migrations
-* **Handlebars (hbs)** : moteur de templates
-* **Git / GitHub** : gestion de versions
+### 📌 À propos
+**Vapeur** est une application web full-stack permettant de gérer une collection de jeux vidéo. Développée dans un cadre pédagogique, elle offre un système complet d'administration (CRUD) pour les jeux, les éditeurs et la consultation par genres.
+
+> 🎓 **Projet académique** — Respect des spécifications d'un cahier des charges d'architecture web (MVC, ORM, templating côté serveur).
 
 ---
 
-## Prérequis
+### ✨ Fonctionnalités clés
 
-* Node.js (version 18 ou supérieure recommandée)
-* npm
+- 🕹️ **Jeux Vidéo** :
+  - Mise en avant dynamique sur la page d'accueil.
+  - Consultation globale et fiches détaillées (description, date, genre, éditeur).
+  - Gestion complète : Création, Édition, Suppression (CRUD).
+- 🏷️ **Genres** :
+  - Génération automatique des genres par défaut au démarrage (*Action, Aventure, RPG, Simulation, Sport, MMORPG*).
+  - Filtrage des jeux par genre.
+- 🏢 **Éditeurs** :
+  - Création, modification, suppression et affichage des jeux associés par éditeur.
+- ⚡ **Navigation & UX** :
+  - Tri alphabétique automatique sur toutes les listes.
+  - Maillage de liens intuitif entre jeux, genres et éditeurs.
 
 ---
 
-## Installation
+### 🛠️ Stack Technique
 
-1. Cloner le dépôt :
+- **Backend** : Node.js & Express.js
+- **Base de données** : SQLite
+- **ORM** : Prisma (avec migrations automatisées)
+- **Moteur de templates** : Handlebars (`hbs`)
 
+---
+
+### 🚀 Installation & Lancement
+
+#### 1. Prérequis
+- [Node.js](https://nodejs.org/) (`v18` ou supérieure)
+- `npm`
+
+#### 2. Cloner le projet
 ```bash
-git clone https://github.com/lucbr1/Vapeur
+git clone https://github.com/lucbr1/Vapeur.git
+cd Vapeur
 ```
 
-2. Créer le fichier .env :
-
+#### 3. Configuration de l'environnement
+Créez un fichier `.env` à la racine du projet avec la variable suivante :
+```env
+DATABASE_URL="file:./dev.db"
 ```
-Vous devez definir le .env dans le dossier global ainsi que le DATABASE_URL dans le fichier .env tel que : DATABASE_URL="votre url"
-```
 
-3. Installer les dépendances :
-
+#### 4. Dépendances & Base de données
 ```bash
+# Installation des packages
 npm install
-```
 
-4. Appliquer les migrations Prisma :
-
-```bash
+# Application des migrations Prisma
 npx prisma migrate deploy
-```
 
-5. Générer le client Prisma :
-
-```bash
+# Génération du client Prisma
 npx prisma generate
 ```
 
-6. Lancer l’application :
-
+#### 5. Lancer l'application
 ```bash
 npm run start
 ```
-
-L’application est ensuite accessible depuis votre navigateur à l’adresse :
-
-```
-http://localhost:3080 
-```
+📍 L'application sera accessible sur **`http://localhost:3080`**
 
 ---
 
-## Base de données
+<details>
+<summary>📂 <b>Cliquez ici pour voir la structure du projet</b></summary>
 
-* La base de données utilise **SQLite**
-* Le fichier de base de données n’est **pas versionné** (non commité)
-* Les migrations Prisma doivent être appliquées avant le premier lancement
-* Les genres sont automatiquement créés au démarrage de l'application s’ils n’existent pas encore
-* 2 jeux et 2 éditeurs sont également ajoutés pour une utiliasation plus directe et représentative
-
----
-
-## Structure du projet 
-
-```
+```text
 ├── prisma/
 │   ├── schema.prisma
 │   ├── seed.js
 │   └── migrations/
-│       ├── 20251207181255_initialisation_de_la_base/
-│          └── migration.sql
-│       ├── 20251208083433_correction_highlighted/
-│          └── migration.sql
-│       ├── 20251208205419_unique_and_nullable_fields/
-│          └── migration.sql
-│       └── 20251208210825_title_game_unique/
-│          └── migration.sql
 ├── public/
 │   ├── global.css
 │   └── logo.png
 ├── views/
-│   ├── editors/
-│       ├── create.hbs
-│       ├── details.hbs
-│       ├── edit.hbs
-│       └── index.hbs
-│   ├── errors/
-│       ├── 400.hbs
-│       ├── 404.hbs
-│       └── 500.hbs
-│   ├── games/
-│       ├── create.hbs
-│       ├── details.hbs
-│       ├── edit.hbs
-│       └── index.hbs
-│   ├── genres/
-│       ├── details.hbs
-│       └── index.hbs
-│   ├── partials/
+│   ├── editors/      # Vues CRUD pour les éditeurs
+│   ├── errors/       # Pages d'erreur (400, 404, 500)
+│   ├── games/        # Vues CRUD pour les jeux
+│   ├── genres/       # Vues pour les genres
+│   ├── partials/     # Composants réutilisables
 │   ├── index.hbs
 │   └── layout.hbs
-├── .gitignore
-├── index.js
-├── package-lock.json
-├── package.json
-└── README.md
+├── index.js          # Point d'entrée du serveur
+└── package.json
 ```
+</details>
 
 ---
 
-## Navigation
-
-La navigation principale permet d’accéder :
-
-* à la page d’accueil (jeux mis en avant)
-* à la liste des jeux
-* à la liste des genres
-* à la liste des éditeurs
-
-Chaque élément affiché (jeu, genre, éditeur) est cliquable et mène à une page de détail ou à une liste associée.
+### 👥 Auteurs
+- **Mathis GILGENKRANTZ**
+- **Jordan PASQUALINI**
+- **Lucas BRUN** ([@lucbr1](https://github.com/lucbr1))
 
 ---
 
-## Auteur(s)
+<br/>
 
-* Mathis GILGENKRANTZ
-* Jordan PASQUALINI
-* Lucas BRUN
+## 🇬🇧 English Version
+
+### 📌 About
+**Vapeur** is a full-stack web application designed to manage a video game library. Built as an academic project, it provides a full CRUD system for video games, publishers, and genre classification.
 
 ---
 
-## Licence
+### ✨ Key Features
 
-Projet réalisé dans un cadre pédagogique.
+- 🕹️ **Video Games**:
+  - Highlighted games showcase on the home page.
+  - Complete games directory with detailed view (description, release date, genre, publisher).
+  - Full CRUD operations (Create, Read, Update, Delete).
+- 🏷️ **Genres**:
+  - Auto-generated default genres at startup (*Action, Adventure, RPG, Simulation, Sports, MMORPG*).
+  - Filter games by genre.
+- 🏢 **Publishers**:
+  - Create, update, delete publishers and view associated games.
+- ⚡ **Navigation & UX**:
+  - Automatic alphabetical sorting for all lists.
+  - Seamless inter-linking between games, publishers, and genres.
+
+---
+
+### 🛠️ Tech Stack
+
+- **Backend**: Node.js & Express.js
+- **Database**: SQLite
+- **ORM**: Prisma (with automated migrations)
+- **Templating**: Handlebars (`hbs`)
+
+---
+
+### 🚀 Quickstart
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/lucbr1/Vapeur.git
+cd Vapeur
+
+# 2. Setup environment (.env file in root)
+echo 'DATABASE_URL="file:./dev.db"' > .env
+
+# 3. Install dependencies
+npm install
+
+# 4. Run database migrations & generate Prisma client
+npx prisma migrate deploy
+npx prisma generate
+
+# 5. Start the server
+npm run start
+```
+📍 Open **`http://localhost:3080`** in your browser.
+
+---
+
+### 👥 Authors
+- **Mathis GILGENKRANTZ** ([@Mothisma](https://github.com/Mothisma))
+- **Jordan PASQUALINI** ([@jijoxP](https://github.com/jijoxP))
+- **Lucas BRUN** ([@lucbr1](https://github.com/lucbr1))
+
+---
+*Academic Project.*
